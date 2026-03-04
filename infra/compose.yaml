@@ -1,0 +1,41 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: mythos
+      POSTGRES_USER: mythos
+      POSTGRES_PASSWORD: mythos
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+  web:
+    build:
+      context: ..
+      dockerfile: infra/docker/web.Dockerfile
+    environment:
+      DATABASE_URL: postgres://mythos:mythos@db:5432/mythos
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+
+  workers:
+    build:
+      context: ..
+      dockerfile: infra/docker/workers.Dockerfile
+    environment:
+      DATABASE_URL: postgres://mythos:mythos@db:5432/mythos
+    depends_on:
+      - db
+    command: ["pnpm", "--filter", "mythos-workers", "run", "run-all"]
+    # TODO: switch command to ["pnpm", "--filter", "mythos-workers", "run", "dev:publish"] to run the publish-only worker.
+    # TODO: if you want scheduler-only, use dev:scheduler; run-all currently runs scheduler + publish (+ analytics).
+
+volumes:
+  db-data:
+
+# TODO: add redis/queue service if required by worker jobs.

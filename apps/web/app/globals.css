@@ -1,0 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --ink-black: #0D0D0D;
+  --wall-white: #F5F3EF;
+  --graffiti-gold: #C7A76A;
+  --brick-gray: #595959;
+  --signal-teal: #4E808D;
+  --scarlet-burst: #B54A4A;
+
+  --hero-img: url("/textures/wall-light.jpg");
+  --overlay: url("/textures/gold-mist.png");
+}
+
+html, body { height: 100%; }
+body {
+  background: var(--wall-white);
+  color: var(--ink-black);
+}
+
+.hero {
+  background-image: var(--hero-img);
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+.hero::after {
+  content: "";
+  position: absolute; inset: 0;
+  background-image: var(--overlay);
+  mix-blend-mode: multiply;
+  opacity: .35;
+}
+.ink-drip { filter: drop-shadow(0 2px 0 var(--ink-black)); }
+.spray {
+  background: radial-gradient(circle, rgba(0,0,0,.25) 0%, rgba(0,0,0,0) 60%);
+}
+a { color: var(--signal-teal); }
+a:hover { color: #5ea1ac; }

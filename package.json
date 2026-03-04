@@ -1,0 +1,21 @@
+{
+  "name": "mythos",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "pnpm --filter mythos-web dev",
+    "dev:web": "pnpm --filter mythos-web dev",
+    "dev:scheduler": "pnpm --filter mythos-workers run dev:scheduler",
+    "dev:publish": "pnpm --filter mythos-workers run dev:publish",
+    "build": "pnpm --filter mythos-web build",
+    "start": "pnpm --filter mythos-web start",
+    "lint": "pnpm --filter mythos-web lint",
+    "db:generate": "pnpm --filter mythos-web db:generate",
+    "db:migrate": "pnpm --filter mythos-web db:migrate",
+    "db:push": "pnpm --filter mythos-web db:push",
+    "db:studio": "pnpm --filter mythos-web db:studio"
+  }
+}
