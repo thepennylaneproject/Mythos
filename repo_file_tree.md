@@ -1,0 +1,120 @@
+mythos/
+├─ .editorconfig
+├─ .gitignore
+├─ .nvmrc
+├─ LICENSE
+├─ README.md
+├─ package.json # workspace scripts
+├─ pnpm-workspace.yaml # or npm/yarn workspaces
+├─ turbo.json # optional task runner
+│
+├─ .github/
+│ └─ workflows/
+│ ├─ ci.yml # lint, typecheck, build
+│ └─ deploy-workers.yml # worker build and deploy
+│
+├─ .vscode/
+│ ├─ extensions.json
+│ └─ settings.json
+│
+├─ configs/
+│ ├─ eslint/
+│ │ └─ .eslintrc.cjs
+│ ├─ ts/
+│ │ └─ base.tsconfig.json
+│ └─ drizzle/
+│ └─ drizzle.config.ts
+│
+├─ infra/ # optional IaC
+│ ├─ docker/
+│ │ ├─ web.Dockerfile
+│ │ └─ workers.Dockerfile
+│ └─ compose.yaml # local dev stack: db + redis
+│
+├─ apps/
+│ └─ web/ # Next.js App Router
+│ ├─ app/
+│ │ ├─ api/
+│ │ │ ├─ analytics/
+│ │ │ │ └─ [postId]/route.ts
+│ │ │ ├─ campaigns/route.ts
+│ │ │ ├─ dev/seed/route.ts
+│ │ │ ├─ events/route.ts
+│ │ │ ├─ generate/route.ts
+│ │ │ ├─ learn/route.ts
+│ │ │ ├─ oauth/
+│ │ │ │ ├─ meta/callback/route.ts
+│ │ │ │ └─ linkedin/callback/route.ts
+│ │ │ ├─ posts/
+│ │ │ │ ├─ [id]/route.ts # GET, PATCH
+│ │ │ │ └─ schedule/route.ts # POST schedule
+│ │ │ ├─ publish/route.ts
+│ │ │ └─ tasks/
+│ │ │ └─ [id]/route.ts # PATCH move/assign
+│ │ │
+│ │ ├─ (dashboard)/
+│ │ │ ├─ page.tsx # dashboard landing
+│ │ │ └─ components/
+│ │ │ ├─ PublishMonitor.tsx
+│ │ │ └─ InsightsMini.tsx
+│ │ ├─ projects/
+│ │ │ └─ [id]/page.tsx # Kanban + Gantt view
+│ │ ├─ composer/
+│ │ │ └─ page.tsx # campaign planner
+│ │ ├─ layout.tsx
+│ │ ├─ page.tsx # marketing site hero
+│ │ └─ globals.css
+│ │
+│ ├─ components/
+│ │ ├─ Hero.tsx
+│ │ ├─ GraffitiWall.tsx
+│ │ ├─ KanbanBoard.tsx
+│ │ ├─ GanttTimeline.tsx
+│ │ ├─ SchedulePicker.tsx
+│ │ └─ SpriteIcon.tsx
+│ │
+│ ├─ lib/
+│ │ ├─ env.ts
+│ │ ├─ db.ts
+│ │ ├─ schema.ts # Drizzle models
+│ │ ├─ queue.ts # Redis queue helpers
+│ │ ├─ automations.ts # event rules
+│ │ ├─ preflight.ts # publish QA checks
+│ │ ├─ bestTime.ts # timing recommender
+│ │ ├─ tokens.ts # brand tokens
+│ │ └─ vendor/
+│ │ ├─ meta.ts # IG/FB helpers
+│ │ └─ linkedin.ts # LI helpers
+│ │
+│ ├─ public/
+│ │ ├─ sprite.svg # halo, eye, spray, etc.
+│ │ └─ textures/
+│ │ ├─ wall-light.jpg
+│ │ ├─ wall-dark.jpg
+│ │ └─ gold-mist.png
+│ │
+│ ├─ tailwind.config.ts
+│ ├─ postcss.config.js
+│ ├─ tsconfig.json
+│ └─ .env.example
+│
+└─ packages/
+├─ workers/ # background jobs
+│ ├─ package.json
+│ ├─ tsconfig.json
+│ └─ src/
+│ ├─ jobs.ts # worker loop
+│ ├─ generate.worker.ts # copy/image/video gen
+│ ├─ convert.image.worker.ts # ImageMagick pipeline
+│ ├─ convert.video.worker.ts # ffmpeg pipeline
+│ ├─ publish.worker.ts # Meta/LinkedIn posting
+│ ├─ scheduler.worker.ts # time-based publish
+│ └─ analytics.worker.ts # metrics ingest
+│
+└─ ui/ # optional shared UI kit
+├─ package.json
+├─ tsconfig.json
+└─ src/
+├─ cards/
+├─ charts/
+└─ index.ts
