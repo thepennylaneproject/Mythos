@@ -25,7 +25,7 @@ export async function POST(req: NextRequest) {
 
     const result = await ai.researchAndDraft(topic, channels || ["meta", "linkedin", "x"], {
       brandVoice,
-      braveApiKey: process.env.BRAVE_API_KEY,
+      braveApiKey: process.env.BRAVE_SEARCH_API_KEY,
     });
 
     return NextResponse.json(result);
