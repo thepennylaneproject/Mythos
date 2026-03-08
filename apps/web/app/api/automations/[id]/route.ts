@@ -4,6 +4,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { automations, automationTriggers, automationActions, automationLogs } from "@/lib/schema";
+import { auth } from "@/lib/auth";
 import { eq, desc } from "drizzle-orm";
 import { runAutomation, testAutomation } from "@/lib/automation/engine";
 
@@ -13,6 +14,11 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const session = await auth();
+    if (!session?.user) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
     const { id } = await params;
 
     const [automation] = await db.select().from(automations).where(eq(automations.id, id));

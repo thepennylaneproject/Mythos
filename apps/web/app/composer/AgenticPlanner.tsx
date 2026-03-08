@@ -107,7 +107,7 @@ export function AgenticPlanner({ onPlanGenerated, orgId }: AgenticPlannerProps) 
       {plan && (
         <div className="space-y-4 pt-4 border-t">
           <h4 className="font-bold text-sm flex items-center gap-2">
-            <span>📋</span> Agent's Strategic Plan
+            <span>📋</span> Agent&apos;s Strategic Plan
           </h4>
           <div className="space-y-3">
             {plan.phases.map((phase, i) => (
@@ -128,7 +128,7 @@ export function AgenticPlanner({ onPlanGenerated, orgId }: AgenticPlannerProps) 
             ))}
           </div>
           <div className="bg-muted/50 p-3 rounded-lg text-xs text-muted-foreground italic">
-            <strong>Agent's Reasoning:</strong> {plan.reasoning}
+            <strong>Agent&apos;s Reasoning:</strong> {plan.reasoning}
           </div>
         </div>
       )}

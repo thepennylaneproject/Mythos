@@ -53,7 +53,7 @@ export function VoiceAuthenticator({ content, orgId }: VoiceAuthenticatorProps) 
 
       {!result && !loading && !error && (
         <p className="text-muted-foreground text-sm italic">
-          Run the authenticator to check for brand alignment and "AI slop."
+          Run the authenticator to check for brand alignment and &quot;AI slop.&quot;
         </p>
       )}
 
@@ -84,7 +84,7 @@ export function VoiceAuthenticator({ content, orgId }: VoiceAuthenticatorProps) 
               <div className="flex flex-wrap gap-2">
                 {result.roboticPhrases.map((rp, i) => (
                   <div key={i} className="group relative bg-destructive/5 border border-destructive/20 text-destructive text-xs px-2 py-1 rounded-md cursor-help" title={rp.reason}>
-                    "{rp.phrase}"
+                    &quot;{rp.phrase}&quot;
                   </div>
                 ))}
               </div>
@@ -94,7 +94,7 @@ export function VoiceAuthenticator({ content, orgId }: VoiceAuthenticatorProps) 
           {/* Grit Advice */}
           <div className="space-y-2">
             <h4 className="text-sm font-bold flex items-center gap-2 text-primary/80">
-              <span>🧂</span> Human "Grit" Suggestions
+              <span>🧂</span> Human &quot;Grit&quot; Suggestions
             </h4>
             <p className="text-xs text-muted-foreground leading-relaxed bg-primary/5 border border-primary/10 p-3 rounded-lg italic">
               {result.gritAdvice}
