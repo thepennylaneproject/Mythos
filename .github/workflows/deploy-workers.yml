@@ -15,17 +15,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Use Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version-file: ".nvmrc"
-          cache: "pnpm"
-
       - name: Install pnpm
         uses: pnpm/action-setup@v4
         with:
           version: 9
           run_install: false
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: ".nvmrc"
+          cache: "pnpm"
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -34,4 +34,6 @@ jobs:
         run: pnpm --filter workers... run build --if-present
 
       - name: Deploy workers
-        run: echo "TODO: add deploy commands (e.g. fly deploy, docker push, etc.)"
+        # TODO: Add deployment commands once infrastructure target is chosen
+        # (e.g., fly deploy, docker push to registry, kubectl apply, etc.)
+        run: echo "Deploy step not yet configured — skipping."

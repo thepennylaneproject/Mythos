@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { posts, metrics } from "@/lib/schema";
+import { auth } from "@/lib/auth";
 import { eq } from "drizzle-orm";
 import { z } from "zod";
 
@@ -21,6 +22,11 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const session = await auth();
+    if (!session?.user) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
     const { id } = await params;
 
     const [post] = await db.select().from(posts).where(eq(posts.id, id));

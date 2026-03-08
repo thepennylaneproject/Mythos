@@ -67,7 +67,7 @@ export function CommunityDashboard() {
         </div>
         {members.length === 0 ? (
           <div className="p-8 text-center text-muted-foreground text-sm">
-            No community members yet. As people engage with your content, they'll appear here.
+            No community members yet. As people engage with your content, they&apos;ll appear here.
           </div>
         ) : (
           <div className="divide-y">

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { posts, postPlans } from "@/lib/schema";
+import { auth } from "@/lib/auth";
 import { eq, desc, and, gte, lte, inArray } from "drizzle-orm";
 import { z } from "zod";
 
@@ -28,6 +29,11 @@ const QuerySchema = z.object({
 // GET /api/posts - List posts with filtering
 export async function GET(req: NextRequest) {
   try {
+    const session = await auth();
+    if (!session?.user) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
     const url = new URL(req.url);
     const params = Object.fromEntries(url.searchParams);
     const query = QuerySchema.parse(params);
@@ -65,6 +71,11 @@ export async function GET(req: NextRequest) {
 // POST /api/posts - Create post
 export async function POST(req: NextRequest) {
   try {
+    const session = await auth();
+    if (!session?.user) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
     const body = await req.json();
     const data = CreatePostSchema.parse(body);
 

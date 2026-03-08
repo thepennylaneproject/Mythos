@@ -5,10 +5,16 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { posts } from "@/lib/schema";
+import { auth } from "@/lib/auth";
 import { eq, isNull, desc } from "drizzle-orm";
 
 export async function GET(req: NextRequest) {
   try {
+    const session = await auth();
+    if (!session?.user) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
     // Get draft posts without scheduled time (backlog)
     const backlog = await db
       .select()

@@ -4,6 +4,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { organizations, organizationMembers } from "@/lib/schema";
+import { auth } from "@/lib/auth";
 import { eq, desc } from "drizzle-orm";
 import { z } from "zod";
 
@@ -15,7 +16,11 @@ const CreateOrgSchema = z.object({
 // GET /api/organizations - List user's organizations
 export async function GET(req: NextRequest) {
   try {
-    // In production, filter by userId from session
+    const session = await auth();
+    if (!session?.user) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
     const result = await db.select().from(organizations).orderBy(desc(organizations.createdAt));
     return NextResponse.json({ organizations: result });
   } catch (error: any) {
@@ -26,11 +31,15 @@ export async function GET(req: NextRequest) {
 // POST /api/organizations - Create organization
 export async function POST(req: NextRequest) {
   try {
+    const session = await auth();
+    if (!session?.user) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
     const body = await req.json();
     const data = CreateOrgSchema.parse(body);
 
-    // TODO: Get userId from session
-    const userId = "00000000-0000-0000-0000-000000000000";
+    const userId = session.user.id!;
 
     const [org] = await db
       .insert(organizations)

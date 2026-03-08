@@ -4,6 +4,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { automations, automationTriggers, automationActions } from "@/lib/schema";
+import { auth } from "@/lib/auth";
 import { eq, desc } from "drizzle-orm";
 import { z } from "zod";
 
@@ -25,6 +26,11 @@ const CreateAutomationSchema = z.object({
 // GET /api/automations - List automations
 export async function GET(req: NextRequest) {
   try {
+    const session = await auth();
+    if (!session?.user) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
     const result = await db
       .select()
       .from(automations)
@@ -39,6 +45,11 @@ export async function GET(req: NextRequest) {
 // POST /api/automations - Create automation
 export async function POST(req: NextRequest) {
   try {
+    const session = await auth();
+    if (!session?.user) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
     const body = await req.json();
     const data = CreateAutomationSchema.parse(body);
 
