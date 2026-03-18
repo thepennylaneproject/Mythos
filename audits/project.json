@@ -1,0 +1,9 @@
+{
+  "project_name": "mythos",
+  "expectations_path": "audits/expectations.md",
+  "rule_counts": {
+    "critical": 11,
+    "warning": 13,
+    "suggestion": 2
+  }
+}
